@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  # Flask application service
+  web:
+    build: .
+    ports:
+      - "5003:5000"
+    volumes:
+      - .:/app
+    environment:
+      - FLASK_ENV=development
+      - SQLALCHEMY_DATABASE_URI=postgresql://postgres:password@db:5432/emaildb
+    depends_on:
+      - db
+
+  # PostgreSQL database service
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: emaildb
+    ports:
+      - "5433:5432"
