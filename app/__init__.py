@@ -20,7 +20,6 @@ def create_app(environment=None):
     else:
         selected_app_settings = app_settings.get(app.config.get('FLASK_ENV', 'development'))
     app.config.from_object(selected_app_settings)
-    print(app.config)
 
     # set secret_key
     app.secret_key = app.config['SECRET_KEY']

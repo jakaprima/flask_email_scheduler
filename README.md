@@ -4,6 +4,10 @@
 Make sure you already installed **python3.8** or higher in your machine
 
 1. Create your virtualenv and activate (if you are using virtuanenv)
+   ```sh
+   python3 -m venv venv_name
+   source venv_name/bin/activate
+    ```
 2. Install library 
     ```sh
     pip install -r requirements.txt
@@ -12,6 +16,10 @@ Make sure you already installed **python3.8** or higher in your machine
 3. copy .env.example to .env
     ```sh
     cp .env.example .env
+    ```
+3. in this demo apps use postgres, create db name: emaildb then change .env file
+    ```sh
+    SQLALCHEMY_DATABASE_URI = "postgresql://postgres:postgres@localhost/emaildb"
     ```
     
 5. run migraton file
@@ -47,10 +55,25 @@ Make sure you already installed **python3.8** or higher in your machine
     # celery beat
     celery -A server.celery beat --loglevel INFO
     ```
-   
+
+
+2. Use pytest
+<br> You can run unit test by executing this command
+``` sh
+# run all unittest
+pytest or pytest -q tests --disable-warnings
+
+# run single file
+pytest or pytest -q tests/test_email.py --disable-warnings
+
+# run single unittest function
+pytest -q tests/test_email.py -k test_routes --disable-warnings
+
+```
+
 10. run celery flower (monitoring task)
    ```sh
-  celery -A proj flower --address=127.0.0.1 --port=5566
+  celery -A server flower --address=127.0.0.1 --port=5566
    ```
 
 
@@ -80,17 +103,3 @@ Set your .env file for variable key for `SQLALCHEMY_DATABASE_URI`
 <br> if your new ORM class is not registered yet, you cann't migrate your db
 <br><br>
 
-
-2. Use pytest
-<br> You can run unit test by executing this command
-``` sh
-# run all unittest
-pytest or pytest -q tests --disable-warnings
-
-# run single file
-pytest or pytest -q tests/test_email.py --disable-warnings
-
-# run single unittest function
-pytest -q tests/test_email.py -k test_routes --disable-warnings
-
-```
